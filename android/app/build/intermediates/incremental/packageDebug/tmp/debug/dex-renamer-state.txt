@@ -1,7 +1,4 @@
-#Thu Nov 05 17:26:42 BRT 2020
+#Fri Nov 06 16:18:55 BRT 2020
 base.0=/home/evocorp/Projetos/picpay/android/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
-path.1=classes.dex
-renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=/home/evocorp/Projetos/picPayClone/android/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex

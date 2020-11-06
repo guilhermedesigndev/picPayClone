@@ -1,5 +1,9 @@
-import React from 'react';
-import {Feather} from 'react-native-vector-icons/Feather';
+import React, {useState} from 'react';
+import {Switch} from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {
   Wrapper,
@@ -11,28 +15,117 @@ import {
   Bold,
   EyeButton,
   Info,
+  Actions,
+  Action,
+  ActionLabel,
+  UseBalance,
+  UseBalanceTitle,
+  PaymentMethods,
+  PaymentMethodsTitle,
+  Card,
+  CardBody,
+  CardDetails,
+  CardTitle,
+  CardInfo,
+  Img,
+  AddButton,
+  AddLabel,
+  UseTicketButton,
+  UseTicketLabel,
+  UseTicketContainer,
 } from './styles';
 
+import creditCard from '~/assets/images/credit-card.png';
+
 export default function Wallet() {
+  const [isVisible, setIsVisible] = useState(true);
+  const [useBalance, setUseBalance] = useState(true);
+
+  function handleToggleVisibility() {
+    setIsVisible((prevState) => !prevState);
+  }
+
+  function handleToggleUseBalance() {
+    setUseBalance((prevState) => !prevState);
+  }
+
   return (
     <Wrapper>
-      <Header colors={['#52E78C', '#1AB563']}>
+      <Header
+        colors={useBalance ? ['#52E78C', '#1AB563'] : ['#D3D3D3', '#868686']}>
         <HeaderContainer>
           <Title>Saldo PicPay</Title>
 
           <BalanceContainer>
             <Value>
-              R$ <Bold>0,00</Bold>
+              R$ <Bold>{isVisible ? '0,00' : '----'}</Bold>
             </Value>
 
-            <EyeButton>
-              <Feather name="eye" size={28} color="#fff" />
+            <EyeButton onPress={handleToggleVisibility}>
+              <Feather
+                name={isVisible ? 'eye' : 'eye-off'}
+                size={28}
+                color="#fff"
+              />
             </EyeButton>
           </BalanceContainer>
 
           <Info>Seu saldo está rendendo 100% do CDI</Info>
+
+          <Actions>
+            <Action>
+              <MaterialCommunityIcons name="cash" size={20} color="#fff" />
+              <ActionLabel>Adicionar</ActionLabel>
+            </Action>
+
+            <Action>
+              <FontAwesome name="bank" size={20} color="#fff" />
+              <ActionLabel>Retirar</ActionLabel>
+            </Action>
+          </Actions>
         </HeaderContainer>
       </Header>
+
+      <UseBalance>
+        <UseBalanceTitle>Usar saldo ao pagar</UseBalanceTitle>
+
+        <Switch value={useBalance} onValueChange={handleToggleUseBalance} />
+      </UseBalance>
+
+      <PaymentMethods>
+        <PaymentMethodsTitle>Formas de pagamento</PaymentMethodsTitle>
+
+        <Card>
+          <CardBody>
+            <CardDetails>
+              <CardTitle>Cadastre seu cartão de crédito</CardTitle>
+              <CardInfo>
+                Cadastre seu cartão de crédito para poder fazer pagamentos mesmo
+                quando não tiver saldo no seu PicPay
+              </CardInfo>
+            </CardDetails>
+
+            <Img resizeMode="contain" source={creditCard} />
+          </CardBody>
+
+          <AddButton>
+            <AntDesign name="pluscircleo" size={30} color="#0DB060" />
+            <AddLabel>Adicionar cartão de crédito</AddLabel>
+          </AddButton>
+        </Card>
+
+        <UseTicketContainer>
+          <UseTicketButton>
+            <MaterialCommunityIcons
+              name="ticket-outline"
+              size={20}
+              color="#0DB060"
+            />
+
+            <UseTicketLabel>Usar código promocional</UseTicketLabel>
+          </UseTicketButton>
+        </UseTicketContainer>
+      </PaymentMethods>
     </Wrapper>
   );
 }
